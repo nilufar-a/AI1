@@ -1,0 +1,14 @@
+runtime: java
+api_version: 1
+threadsafe: yes
+service: ai1
+
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: .*
+  script: main.app
+
