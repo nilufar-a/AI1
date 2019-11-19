@@ -70,7 +70,7 @@ public class smarteralgorithm {
 		}
 		else if(predirection == 3) {
 			String[][] transfermap = transfermapfr(map, weight, height);
-			direction = estimatearea(transfermap, height, weight, height - currentlx, weight - currently);
+			direction = estimatearea(transfermap, height, weight, weight - currently - 1, height - currentlx - 1);
 			if(direction == 1) {
 				return 4;
 			}
@@ -123,6 +123,8 @@ public class smarteralgorithm {
 	}
 	private static int estimatearea(String[][] map, int weight, int height, int currentlocationx, int currentlocationy) {
 		// TODO Auto-generated method stub
+		int rightbreak = 0;
+		int leftbreak = 0;
 		int rightflag = 0;
 		int leftflag = 0;
 		int rightheight = 0;
@@ -136,7 +138,7 @@ public class smarteralgorithm {
 		limitedright[1] = 999;
 		int[] limitedleft = new int[2];
 		limitedleft[0] = 999;
-		limitedleft[1] = 999;
+		limitedleft[1] = -1;
 		System.out.println("~~~~~~~~~~~~~~~~~~~~");
 		for(int i = 0; i < height; i++) {
 			System.out.println("");
@@ -145,26 +147,44 @@ public class smarteralgorithm {
 			}
 		}
 		System.out.println("~~~~~~~~~~~~~");
+		System.out.println("currentlocationx" + currentlocationx + "currentlocationy" + currentlocationy);
 		for(int i = currentlocationx; i < height; i++) {
+			if(rightbreak != 0)
+				break;
+			int flagjumpfirsttime = 0;
 			for(int j = currentlocationy; j < weight; j++) {
-				if(j == currentlocationy + 1 && map[i][j].equals("*") ) {
-					rightheight = i - currentlocationx + 1;
+				
+				if(currentlocationy + 1 >= weight) {
+					rightheight = 0;
+//					limitedright[1] = 0;
 					rightflag++;
+					rightbreak++;
 					break;
 				}
-//				System.out.println("");
-//				System.out.println(i + " " + j + "weightl" + weight + "heightl" + height);
-				if(map[i][j].equals("*")) {
-					if(j < limitedright[1] && rightheight == 0) {
-						limitedright[0] = i;
-						limitedright[1] = j;
-						haveenterflagr++;
-					}	
+				
+				if(j + 1 < weight && flagjumpfirsttime == 0) {
+					flagjumpfirsttime++;
+					continue;
+				}	
+				
+				if(j == currentlocationy + 1 && map[i][j].equals("*") ) {
+					rightheight = i - currentlocationx;
+					rightflag++;
+					rightbreak++;
+					break;
+				}
+				
+				if(map[i][j].equals("*") && j < limitedright[1]) {
+					limitedright[0] = i;
+					limitedright[1] = j;
+					haveenterflagr++;
+					rightheight = 1;
 				}
 			}
 		}
-		if(rightheight == 0 && rightflag != 0) {
+		if(rightheight == 0 && rightflag == 0) {
 			rightheight = height - currentlocationx;
+			
 		}
 		if(haveenterflagr == 0) {
 			limitedright[1] = weight;
@@ -173,25 +193,38 @@ public class smarteralgorithm {
 		
 
 		for(int i = currentlocationx; i < height; i++) {
+			if(leftbreak != 0)
+				break;
+			int flagjumpfirsttime = 0;
 			for(int j = currentlocationy; j >= 0; j--) {
-				if(j == currentlocationy - 1 && map[i][j].equals("*") ) {
-					leftheight = height - currentlocationx + 1;
+				if(currentlocationy - 1 < 0) {
+					leftheight = 0;
 					leftflag++;
+					leftbreak++;
 					break;
 				}
-//				System.out.println("");
-//				System.out.println(i + " " + j + "weightl" + weight + "heightl" + height);
-				if(map[i][j].equals("*")) {
-					if(j < limitedleft[1] && leftheight == 0) {
+				if(j - 1 >= 0 && flagjumpfirsttime == 0)
+				{
+					flagjumpfirsttime++;
+					continue;
+				}
+				System.out.println("i "  + i + " j " + j);	
+				if(j == currentlocationy - 1 && map[i][j].equals("*") ) {
+					leftheight = i - currentlocationx;
+					leftflag++;
+					leftbreak++;
+					break;
+				}
+				if(map[i][j].equals("*") && j > limitedleft[1]) {
 						limitedleft[0] = i;
 						limitedleft[1] = j;
 						haveenterflagl++;
-					}	
+						leftheight = 1;
 				}
 			}
 		}
 				
-		if(leftheight == 0 && leftflag != 0) {
+		if(leftheight == 0 && leftflag == 0) {
 			leftheight = height - currentlocationx;
 		}
 		if(haveenterflagl == 0) {
@@ -201,15 +234,19 @@ public class smarteralgorithm {
 		
 		
 		if(leftarea > rightarea) {
+			System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
 			System.out.println("leftwin" + " " + leftarea + " " + rightarea);
 			return 1;
 		}
 		else if(leftarea < rightarea){
+			System.out.println("xiaolimitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
 			System.out.println("rightwin" + " " + leftarea + " " + rightarea);
 			return 2;
 		}
 		else if(leftarea == rightarea){
 			System.out.println("equal" + " " + leftarea + " " + rightarea);
+			System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
+			System.out.println("limitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
 			if(currentlocationy - 1 < 0)
 				return 2;
 			else if(currentlocationy + 1 == weight)
@@ -218,6 +255,10 @@ public class smarteralgorithm {
 				return 1;
 			}
 		}
+		System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
+		System.out.println("limitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
+		System.out.println("don't find" + " " + leftarea + " " + rightarea);
+
 		return -1;
 	}
 	private static int ifnextoccupy(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
