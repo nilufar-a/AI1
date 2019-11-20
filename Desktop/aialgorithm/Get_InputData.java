@@ -1,4 +1,4 @@
-package teamworkai;
+package aialgorithm;
 
 import java.util.Scanner;
 

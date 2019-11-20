@@ -1,20 +1,23 @@
-package teamworkai;
+package aialgorithm;
 
 import java.util.Random;
 
+//choose next point by random
 public class Operator {
 	static int current_x = 0;
 	static int current_y = 0;
 	static int Game_weight = 0;
 	static int Game_height = 0;
 	static String[][] GameMap = null;
+	//weigh,height is the weight and height of map.
 	public static void operator(String[][] map, int weight, int height) {
+		//generate the map and the beginning point by random
 		Set_Begin(map, weight, height);
 		Game_weight = weight;
 		Game_height = height;
 		while(true) {
 			int Direction = Find_Direction();
-			if(Direction == 1) {
+			if(Direction == 1) {//1 left, 2 up, 3 right, 4 back
 				GameMap[current_x - 1][current_y] = "*";
 				current_x -= 1;
 			}
@@ -51,6 +54,7 @@ public class Operator {
 			} 
 		}
 	}
+	//generate the beginning point by random
 	private static void Set_Begin(String[][] map, int x, int y){
 		Random random = new Random();
 		current_x = random.nextInt(x);
@@ -58,6 +62,8 @@ public class Operator {
 		map[current_x][current_y] = "*";		
 		GameMap = map;
 	}
+	
+	//find the next direction by randomly
 	private static int Find_Direction() {
 		int count = 0;
 		if(current_x - 1 <= 0)
@@ -83,12 +89,16 @@ public class Operator {
 		while(true) {
 			direction = random.nextInt(4) + 1;
 			int flag = -1;
+			//to check the direction generate by random if it's occupied
 			flag = Find_IfOccupy(direction);
+			//6 and 8 means lucky
 			if(flag == 8) {
 				return direction;
 			}
 		}
 	}
+	
+	//to check the direction generate by random if it's occupied
 	private static int Find_IfOccupy(int dir) {
 		
 		if(dir == 1 && current_x - 1 > 0){
