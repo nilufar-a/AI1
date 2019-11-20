@@ -3,17 +3,6 @@ package teamworkai;
 public class smarteralgorithm {
 	public static int operator(String[][] map, int weight, int height, int predirection, int[] currentlocation ) {
 		//需要一开始就转换地图的横跟纵的数据因为我想错了
-//		String[][] map = new String[weight][height];
-//		for(int i = 0; i < weight; i++) {
-//			for(int j = 0; j < height; j++) {
-//				map[i][j] = needtransfermap[j][i];
-//			}
-//		}
-		
-//		int change = 0;
-//		change = currentlocation[0];
-//		currentlocation[0] = currentlocation[1];
-//		currentlocation[1] = change;
 		
 		//1,left,2 head,3 right,4 back
 		int direction = ifnextoccupy(map, weight, height, predirection, currentlocation);
@@ -139,15 +128,6 @@ public class smarteralgorithm {
 		int[] limitedleft = new int[2];
 		limitedleft[0] = 999;
 		limitedleft[1] = -1;
-		System.out.println("~~~~~~~~~~~~~~~~~~~~");
-		for(int i = 0; i < height; i++) {
-			System.out.println("");
-			for(int j = 0; j < weight; j++) {
-				System.out.print(map[i][j]);
-			}
-		}
-		System.out.println("~~~~~~~~~~~~~");
-		System.out.println("currentlocationx" + currentlocationx + "currentlocationy" + currentlocationy);
 		for(int i = currentlocationx; i < height; i++) {
 			if(rightbreak != 0)
 				break;
@@ -156,7 +136,6 @@ public class smarteralgorithm {
 				
 				if(currentlocationy + 1 >= weight) {
 					rightheight = 0;
-//					limitedright[1] = 0;
 					rightflag++;
 					rightbreak++;
 					break;
@@ -208,7 +187,6 @@ public class smarteralgorithm {
 					flagjumpfirsttime++;
 					continue;
 				}
-				System.out.println("i "  + i + " j " + j);	
 				if(j == currentlocationy - 1 && map[i][j].equals("*") ) {
 					leftheight = i - currentlocationx;
 					leftflag++;
@@ -234,19 +212,15 @@ public class smarteralgorithm {
 		
 		
 		if(leftarea > rightarea) {
-			System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
-			System.out.println("leftwin" + " " + leftarea + " " + rightarea);
+			
 			return 1;
 		}
 		else if(leftarea < rightarea){
-			System.out.println("xiaolimitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
-			System.out.println("rightwin" + " " + leftarea + " " + rightarea);
+			
 			return 2;
 		}
 		else if(leftarea == rightarea){
-			System.out.println("equal" + " " + leftarea + " " + rightarea);
-			System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
-			System.out.println("limitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
+			
 			if(currentlocationy - 1 < 0)
 				return 2;
 			else if(currentlocationy + 1 == weight)
@@ -255,10 +229,7 @@ public class smarteralgorithm {
 				return 1;
 			}
 		}
-		System.out.println("limitedrleft[1] " + limitedleft[1] + " currentlocationy " + currentlocationy + " leftheight " + leftheight);
-		System.out.println("limitedright[1] " + limitedright[1] + " currentlocationy " + currentlocationy + " rightheight " + rightheight);
-		System.out.println("don't find" + " " + leftarea + " " + rightarea);
-
+		
 		return -1;
 	}
 	private static int ifnextoccupy(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
