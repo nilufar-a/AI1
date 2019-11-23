@@ -76,7 +76,7 @@ public class smarteralgorithm {
 		}
 		else if(predirection == 4) {
 			String[][] transfermap = transfermapfd(map, weight, height);
-			direction = estimatearea(transfermap, weight, height, height - currentlx, currently);
+			direction = estimatearea(transfermap, weight, height, height - currentlx - 1, currently);
 			if(direction == 1) {
 				return 1;
 			}
