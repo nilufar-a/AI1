@@ -83,19 +83,23 @@ public class Testmultiplayer {
 		predirection[WhichOfPlayer] = Direction;
 		if(Direction == 1) {
 			Player_y[WhichOfPlayer]--;
-			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+//			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = String.valueOf(WhichOfPlayer);
 		}
 		else if(Direction == 2) {
 			Player_x[WhichOfPlayer]--;
-			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+//			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = String.valueOf(WhichOfPlayer);
 		}
 		else if(Direction == 3) {
 			Player_y[WhichOfPlayer]++;
-			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+//			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = String.valueOf(WhichOfPlayer);
 		}
 		else if(Direction == 4) {
 			Player_x[WhichOfPlayer]++;
-			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+//			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
+			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = String.valueOf(WhichOfPlayer);
 		}
 		else if(Direction == -1) {
 			return -1;			
@@ -123,7 +127,8 @@ public class Testmultiplayer {
 			int current_x = random.nextInt(height);
 			int current_y = random.nextInt(weight);
 			if(Map[current_x][current_y] == ".") {
-				Map[current_x][current_y] = "*";
+//				Map[current_x][current_y] = "*";
+				Map[current_x][current_y] = String.valueOf(num);
 				Player_x[num] = current_x;
 				Player_y[num] = current_y;
 				break;

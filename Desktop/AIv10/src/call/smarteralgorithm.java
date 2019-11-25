@@ -1,49 +1,40 @@
-package call;
+package teamworkai;
 
 public class smarteralgorithm {
-	public static int operator(String[][] map, int weight, int height, int predirection, int[] currentlocation ) {
-
-		//1,left,2 up ,3 right,4 down
-		//to check the direction generate by algorithm if it's occupied
-		//return predirection if the next direction is same 
-		//if the next is occupied return 0
+	public static int operator(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
+		//1,left,2 head,3 right,4 back
 		int direction = ifnextoccupy(map, weight, height, predirection, currentlocation);
-		if(direction == 0) { //empty the direction
+		if(direction == 0) {
 			direction = transferdata(map, weight, height, currentlocation[0], currentlocation[1], predirection);
 			predirection = direction;
 		}		
 		return predirection;
 	}
-	
-	//transfer all the direction into up
 	private static int transferdata(String[][] map, int weight, int height, int currentlx, int currently, int predirection) {
 		// TODO Auto-generated method stub
 		int direction = 0;
 		
-		//count means flag if the flag is 4 game over
+		
 		int count = 0;
-		//1. check if it out the map
 		if(currentlx - 1 < 0)
 			count++;
-		else if(map[currentlx - 1][currently].equals("*")) 
+		else if(!map[currentlx - 1][currently].equals("."))
 			count++;
-		//2.
 		if(currently + 1 >= weight)
 			count++;
-		else if(map[currentlx][currently + 1].equals("*"))
+		else if(!map[currentlx][currently + 1].equals("."))
 			count++;
-		//3.
 		if(currentlx + 1 >= height)
 			count++;
-		else if(map[currentlx + 1][currently].equals("*"))
+		else if(!map[currentlx + 1][currently].equals("."))
 			count++;
-		//4.
 		if(currently - 1 < 0)
-			count++;	
-		else if(map[currentlx][currently - 1].equals("*"))
+			count++;
+		else if(!map[currentlx][currently - 1].equals("."))
 			count++;
 		if(count == 4)
-			return -1;	//over , no more direction
+			return -1;	
+		
 		
 		if(predirection == 1) {
 			String[][] transdermap = transfermapfl(map, weight, height);
@@ -86,8 +77,6 @@ public class smarteralgorithm {
 		}
 		return -1;
 	}
-	
-	//transfer map from down
 	private static String[][] transfermapfd(String[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
 		String[][] transfermap = new String[height][weight];
@@ -98,7 +87,6 @@ public class smarteralgorithm {
 		}
 		return transfermap;
 	}
-	//transfer map from right
 	private static String[][] transfermapfr(String[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
 		String[][] transfermap = new String[weight][height];
@@ -109,7 +97,6 @@ public class smarteralgorithm {
 		}
 		return transfermap;
 	}
-	//transfer map from left
 	private static String[][] transfermapfl(String[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
 		String[][] transfermap = new String[weight][height];
@@ -121,7 +108,6 @@ public class smarteralgorithm {
 		return transfermap;
 			
 	}
-	//all the idea of this algorithm is for quickly 
 	private static int estimatearea(String[][] map, int weight, int height, int currentlocationx, int currentlocationy) {
 		// TODO Auto-generated method stub
 		int rightbreak = 0;
@@ -140,7 +126,6 @@ public class smarteralgorithm {
 		int[] limitedleft = new int[2];
 		limitedleft[0] = 999;
 		limitedleft[1] = -1;
-		
 		for(int i = currentlocationx; i < height; i++) {
 			if(rightbreak != 0)
 				break;
@@ -160,14 +145,14 @@ public class smarteralgorithm {
 					continue;
 				}	
 				
-				if(j == currentlocationy + 1 && map[i][j].equals("*") ) {
+				if(j == currentlocationy + 1 && !map[i][j].equals(".") ) {
 					rightheight = i - currentlocationx;
 					rightflag++;
 					rightbreak++;
 					break;
 				}
 				
-				if(map[i][j].equals("*") && j < limitedright[1]) {
+				if(!map[i][j].equals(".") && j < limitedright[1]) {
 					limitedright[0] = i;
 					limitedright[1] = j;
 					haveenterflagr++;
@@ -201,13 +186,13 @@ public class smarteralgorithm {
 					flagjumpfirsttime++;
 					continue;
 				}
-				if(j == currentlocationy - 1 && map[i][j].equals("*") ) {
+				if(j == currentlocationy - 1 && !map[i][j].equals(".") ) {
 					leftheight = i - currentlocationx;
 					leftflag++;
 					leftbreak++;
 					break;
 				}
-				if(map[i][j].equals("*") && j > limitedleft[1]) {
+				if(!map[i][j].equals(".") && j > limitedleft[1]) {
 						limitedleft[0] = i;
 						limitedleft[1] = j;
 						haveenterflagl++;
@@ -223,18 +208,13 @@ public class smarteralgorithm {
 			limitedleft[1] = 0;
 		}
 		leftarea = (currentlocationy - limitedleft[1]) * leftheight;
-		
-		
 		if(leftarea > rightarea) {
-
 			return 1;
 		}
 		else if(leftarea < rightarea){
-
 			return 2;
 		}
 		else if(leftarea == rightarea){
-		
 			if(currentlocationy - 1 < 0)
 				return 2;
 			else if(currentlocationy + 1 == weight)
@@ -243,6 +223,7 @@ public class smarteralgorithm {
 				return 1;
 			}
 		}
+
 		return -1;
 	}
 	private static int ifnextoccupy(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
@@ -250,7 +231,7 @@ public class smarteralgorithm {
 			if(currentlocation[1] - 1 < 0) {
 				return 0;
 			}
-			else if(map[currentlocation[0]][currentlocation[1] - 1].equals("*")) {
+			else if(!map[currentlocation[0]][currentlocation[1] - 1].equals(".")) {
 				return 0;
 			}
 		}
@@ -258,7 +239,7 @@ public class smarteralgorithm {
 			if(currentlocation[0] - 1 < 0) {
 				return 0;
 			}
-			if(map[currentlocation[0] - 1][currentlocation[1]].equals("*")) {
+			if(!map[currentlocation[0] - 1][currentlocation[1]].equals(".")) {
 				return 0;
 			}
 		}
@@ -266,7 +247,7 @@ public class smarteralgorithm {
 			if(currentlocation[1] + 1 == weight) {
 				return 0;
 			}
-			if(map[currentlocation[0]][currentlocation[1] + 1].equals("*")) {
+			if(!map[currentlocation[0]][currentlocation[1] + 1].equals(".")) {
 				return 0;
 			}
 		}
@@ -274,7 +255,7 @@ public class smarteralgorithm {
 			if(currentlocation[0] + 1 == height) {
 				return 0;
 			}
-			if(map[currentlocation[0] + 1][currentlocation[1]].equals("*")) {
+			if(!map[currentlocation[0] + 1][currentlocation[1]].equals(".")) {
 				return 0;
 			}
 		}
