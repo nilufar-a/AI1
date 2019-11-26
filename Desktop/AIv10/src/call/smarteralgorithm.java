@@ -1,4 +1,4 @@
-package teamworkai;
+package call;
 
 public class smarteralgorithm {
 	public static int operator(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
