@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import javax.inject.Singleton;
 
+import com.example.AllPointsOnMap;
+
 public class AIOpp extends Thread{
 	
 	private int userID;
@@ -16,15 +18,15 @@ public class AIOpp extends Thread{
 	
 	int NumOfPlayer = 0;
 	
-	static String[][] Map;
+	static AllPointsOnMap[][] Map;
 	
 	 int Player_x;
 	 int Player_y;
 	 int predirection;
 	
-	public AIOpp(Integer userID, Integer gameID, String token,String[][] map)
+	public AIOpp(Integer userID, Integer gameID, String token,AllPointsOnMap[][] map)
 	{
-		Map = new String[map.length][map[0].length];
+		Map = new AllPointsOnMap[map.length][map[0].length];
 		this.userID = userID;
 		this.gameID = gameID;
 		this.token = token;
@@ -35,11 +37,14 @@ public class AIOpp extends Thread{
 
 	private  void runAI(int weight, int height) {
 		// TODO Auto-generated method stub
-		String[][] map = new String[height][weight];
+		AllPointsOnMap[][] map = new AllPointsOnMap[height][weight];
 		Map = map;
 		for(int i = 0; i < height; i++) {
 			for(int j = 0; j < weight; j++) {
-			Map[i][j] = ".";
+				
+			Map[i][j] = new AllPointsOnMap();   // Map[][] = "."
+			Map[i][j].setState(AllPointsOnMap.State.EMPTY);
+			
 			}
 		}
 
@@ -70,7 +75,7 @@ public class AIOpp extends Thread{
 			for(int i = 0; i < height; i++) {
 			System.out.println("");
 			for(int j = 0; j < weight; j++) {
-				System.out.print(Map[i][j]);
+				System.out.print(Map[i][j].getState().toString());
 			}
 		}
 			
@@ -112,39 +117,27 @@ public class AIOpp extends Thread{
 		if(Direction == 1) {
 			Player_y--;
 //			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
-			Map[Player_x][Player_y] = String.valueOf(WhichOfPlayer);
+			Map[Player_x][Player_y].setState(AllPointsOnMap.State.TRACER);
 		}
 		else if(Direction == 2) {
 			Player_x--;
 //			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
-			Map[Player_x][Player_y] = String.valueOf(WhichOfPlayer);
+			Map[Player_x][Player_y].setState(AllPointsOnMap.State.TRACER);
 		}
 		else if(Direction == 3) {
 			Player_y++;
 //			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
-			Map[Player_x][Player_y] = String.valueOf(WhichOfPlayer);
+			Map[Player_x][Player_y].setState(AllPointsOnMap.State.TRACER);
 		}
 		else if(Direction == 4) {
 			Player_x++;
 //			Map[Player_x[WhichOfPlayer]][Player_y[WhichOfPlayer]] = "*";
-			Map[Player_x][Player_y] = String.valueOf(WhichOfPlayer);
+			Map[Player_x][Player_y].setState(AllPointsOnMap.State.TRACER);
 		}
 		else if(Direction == -1) {
 			return -1;			
 		}
 		return 1;
-//		for(int i = 0; i < height; i++) {
-//			System.out.println("");
-//			for(int j = 0; j < weight; j++) {
-//				System.out.print(Map[i][j]);
-//			}
-//		}
-//	    try {
-//			Thread.sleep(50);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
 	}
 	
 
@@ -154,12 +147,11 @@ public class AIOpp extends Thread{
 			Random random = new Random();
 			int current_x = random.nextInt(height); // Y of matrix
 			int current_y = random.nextInt(weight); // X of matrix
-			if(Map[current_x][current_y] == ".") {
-//				Map[current_x][current_y] = "*";
-				// Map[current_x][current_y] = String.valueOf(i);
-				Map[current_x][current_y] = String.valueOf(userID);
+			if(Map[current_x][current_y].getState() == AllPointsOnMap.State.EMPTY) {
+				
+				Map[current_x][current_y].setState(AllPointsOnMap.State.TRACER);
 				Player_x = current_x; // Sets X value of player num
-				Player_y = current_y; // Sets Y value of player num
+				Player_y = current_y; // Sets Y value of player num			
 				break;
 			}
 		}
@@ -169,5 +161,6 @@ public class AIOpp extends Thread{
 	public void run() {
 		// TODO Auto-generated method stub
 		runAI(Map.length,Map[0].length);
+
 	}
 }

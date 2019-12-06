@@ -3,6 +3,8 @@ package call;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.example.AllPointsOnMap;
+
 public class Testmultiplayer {
 	
 	
@@ -16,7 +18,7 @@ public class Testmultiplayer {
 		System.out.println("# of players: ");
 		Integer NOP = sc.nextInt();
 		
-		String[][] map = new String[20][20];
+		AllPointsOnMap[][] map = new AllPointsOnMap[20][20];
 		
 
 			AIOpp ai = new AIOpp(1,1,"tw24",map);

@@ -1,43 +1,78 @@
 package call;
 
+import com.example.AllPointsOnMap;
+
 public class smarteralgorithm {
-	public static int operator(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
+	
+	
+	public static int operator(AllPointsOnMap[][] map, int weight, int height, int predirection, int[] currentlocation) {
 		//1,left,2 head,3 right,4 back
 		int direction = ifnextoccupy(map, weight, height, predirection, currentlocation);
+		
 		if(direction == 0) {
 			direction = transferdata(map, weight, height, currentlocation[0], currentlocation[1], predirection);
 			predirection = direction;
 		}		
+		
 		return predirection;
 	}
-	private static int transferdata(String[][] map, int weight, int height, int currentlx, int currently, int predirection) {
+	
+	
+	private static int transferdata(AllPointsOnMap[][] map, int weight, int height, int currentlx, int currently, int predirection) {
 		// TODO Auto-generated method stub
 		int direction = 0;
 		
 		
 		int count = 0;
+		
 		if(currentlx - 1 < 0)
+		{
 			count++;
-		else if(!map[currentlx - 1][currently].equals("."))
+			System.out.println("1"); // THIS
+		}else if(!(map[currentlx - 1][currently].getState() == AllPointsOnMap.State.EMPTY)) {
 			count++;
+			System.out.println("2");
+		}
+			
 		if(currently + 1 >= weight)
+		{
 			count++;
-		else if(!map[currentlx][currently + 1].equals("."))
+			System.out.println("3");
+		}else if(!(map[currentlx][currently + 1].getState() == AllPointsOnMap.State.EMPTY)) {
 			count++;
+			System.out.println("4"); // THIS
+		}
+			
 		if(currentlx + 1 >= height)
+		{
 			count++;
-		else if(!map[currentlx + 1][currently].equals("."))
+			System.out.println("5");
+		}else if(!(map[currentlx + 1][currently].getState() == AllPointsOnMap.State.EMPTY))
+		{
 			count++;
+			System.out.println("6"); // THIS
+		}
+			
 		if(currently - 1 < 0)
+		{
 			count++;
-		else if(!map[currentlx][currently - 1].equals("."))
+			System.out.println("7");
+		}else if(!(map[currentlx][currently - 1].getState() == AllPointsOnMap.State.EMPTY))
+		{
 			count++;
+			System.out.println("8"); // THIS
+		}
+			
 		if(count == 4)
+		{
+			System.out.println("\n COUNT IS 4 AND RETURN IS -1");
 			return -1;	
+		}
+		
 		
 		
 		if(predirection == 1) {
-			String[][] transdermap = transfermapfl(map, weight, height);
+			AllPointsOnMap[][] transdermap = transfermapfl(map, weight, height);
 			direction = estimatearea(transdermap, height, weight, currently, currentlx);
 			if(direction == 1) {
 				return 2;
@@ -56,7 +91,7 @@ public class smarteralgorithm {
 			}
 		}
 		else if(predirection == 3) {
-			String[][] transfermap = transfermapfr(map, weight, height);
+			AllPointsOnMap[][] transfermap = transfermapfr(map, weight, height);
 			direction = estimatearea(transfermap, height, weight, weight - currently - 1, height - currentlx - 1);
 			if(direction == 1) {
 				return 4;
@@ -66,7 +101,7 @@ public class smarteralgorithm {
 			}
 		}
 		else if(predirection == 4) {
-			String[][] transfermap = transfermapfd(map, weight, height);
+			AllPointsOnMap[][] transfermap = transfermapfd(map, weight, height);
 			direction = estimatearea(transfermap, weight, height, height - currentlx - 1, currently);
 			if(direction == 1) {
 				return 1;
@@ -77,9 +112,9 @@ public class smarteralgorithm {
 		}
 		return -1;
 	}
-	private static String[][] transfermapfd(String[][] map, int weight, int height) {
+	private static AllPointsOnMap[][] transfermapfd(AllPointsOnMap[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
-		String[][] transfermap = new String[height][weight];
+		AllPointsOnMap[][] transfermap = new AllPointsOnMap[height][weight];
 		for(int i = 0, x = height -1; i < height; i++, x--) {
 			for(int j = 0; j < weight; j++) {
 				transfermap[x][j] = map[i][j];
@@ -87,9 +122,9 @@ public class smarteralgorithm {
 		}
 		return transfermap;
 	}
-	private static String[][] transfermapfr(String[][] map, int weight, int height) {
+	private static AllPointsOnMap[][] transfermapfr(AllPointsOnMap[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
-		String[][] transfermap = new String[weight][height];
+		AllPointsOnMap[][] transfermap = new AllPointsOnMap[weight][height];
 		for(int i = 0, y = height - 1; i < height; i++, y--) {
 			for(int j = 0, x = weight - 1; j < weight; j++, x--) {
 				transfermap[x][y] = map[i][j];
@@ -97,9 +132,9 @@ public class smarteralgorithm {
 		}
 		return transfermap;
 	}
-	private static String[][] transfermapfl(String[][] map, int weight, int height) {
+	private static AllPointsOnMap[][] transfermapfl(AllPointsOnMap[][] map, int weight, int height) {
 		// TODO Auto-generated method stub
-		String[][] transfermap = new String[weight][height];
+		AllPointsOnMap[][] transfermap = new AllPointsOnMap[weight][height];
 		for(int i = 0; i < height; i++) {
 			for(int j = 0; j < weight; j++) {
 				transfermap[j][i] = map[i][j];
@@ -108,7 +143,7 @@ public class smarteralgorithm {
 		return transfermap;
 			
 	}
-	private static int estimatearea(String[][] map, int weight, int height, int currentlocationx, int currentlocationy) {
+	private static int estimatearea(AllPointsOnMap[][] map, int weight, int height, int currentlocationx, int currentlocationy) {
 		// TODO Auto-generated method stub
 		int rightbreak = 0;
 		int leftbreak = 0;
@@ -145,14 +180,14 @@ public class smarteralgorithm {
 					continue;
 				}	
 				
-				if(j == currentlocationy + 1 && !map[i][j].equals(".") ) {
+				if(j == currentlocationy + 1 && !(map[i][j].getState() == AllPointsOnMap.State.EMPTY)) {
 					rightheight = i - currentlocationx;
 					rightflag++;
 					rightbreak++;
 					break;
 				}
 				
-				if(!map[i][j].equals(".") && j < limitedright[1]) {
+				if(!(map[i][j].getState() == AllPointsOnMap.State.EMPTY) && j < limitedright[1]) {
 					limitedright[0] = i;
 					limitedright[1] = j;
 					haveenterflagr++;
@@ -186,13 +221,13 @@ public class smarteralgorithm {
 					flagjumpfirsttime++;
 					continue;
 				}
-				if(j == currentlocationy - 1 && !map[i][j].equals(".") ) {
+				if(j == currentlocationy - 1 && !(map[i][j].getState() == AllPointsOnMap.State.EMPTY) ) {
 					leftheight = i - currentlocationx;
 					leftflag++;
 					leftbreak++;
 					break;
 				}
-				if(!map[i][j].equals(".") && j > limitedleft[1]) {
+				if(!(map[i][j].getState() == AllPointsOnMap.State.EMPTY) && j > limitedleft[1]) {
 						limitedleft[0] = i;
 						limitedleft[1] = j;
 						haveenterflagl++;
@@ -226,12 +261,13 @@ public class smarteralgorithm {
 
 		return -1;
 	}
-	private static int ifnextoccupy(String[][] map, int weight, int height, int predirection, int[] currentlocation) {
+	private static int ifnextoccupy(AllPointsOnMap[][] map, int weight, int height, int predirection, int[] currentlocation) {
+		
 		if(predirection == 1) {
 			if(currentlocation[1] - 1 < 0) {
 				return 0;
 			}
-			else if(!map[currentlocation[0]][currentlocation[1] - 1].equals(".")) {
+			else if(!(map[currentlocation[0]][currentlocation[1] - 1].getState() == AllPointsOnMap.State.EMPTY)) {
 				return 0;
 			}
 		}
@@ -239,7 +275,7 @@ public class smarteralgorithm {
 			if(currentlocation[0] - 1 < 0) {
 				return 0;
 			}
-			if(!map[currentlocation[0] - 1][currentlocation[1]].equals(".")) {
+			if(!(map[currentlocation[0] - 1][currentlocation[1]].getState() == AllPointsOnMap.State.EMPTY)) {
 				return 0;
 			}
 		}
@@ -247,7 +283,7 @@ public class smarteralgorithm {
 			if(currentlocation[1] + 1 == weight) {
 				return 0;
 			}
-			if(!map[currentlocation[0]][currentlocation[1] + 1].equals(".")) {
+			if(!(map[currentlocation[0]][currentlocation[1] + 1].getState() == AllPointsOnMap.State.EMPTY)) {
 				return 0;
 			}
 		}
@@ -255,7 +291,7 @@ public class smarteralgorithm {
 			if(currentlocation[0] + 1 == height) {
 				return 0;
 			}
-			if(!map[currentlocation[0] + 1][currentlocation[1]].equals(".")) {
+			if(!(map[currentlocation[0] + 1][currentlocation[1]].getState() == AllPointsOnMap.State.EMPTY)) {
 				return 0;
 			}
 		}

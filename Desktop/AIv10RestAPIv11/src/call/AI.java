@@ -1,5 +1,7 @@
 package call;
 
+import com.example.AllPointsOnMap;
+
 import call.smarteralgorithm_base;
 
 public class AI extends Thread{
@@ -8,12 +10,12 @@ public class AI extends Thread{
 	private Integer gameID;
 	private String token;
 	
-	String[][] map;
+	AllPointsOnMap[][] map;
 	
 	private Boolean gameCurState = true; 
 	
 	
-	public AI(Integer userID, Integer gameID, String token,String[][] map)
+	public AI(Integer userID, Integer gameID, String token,AllPointsOnMap[][] map)
 	{
 		this.userID = userID;
 		this.gameID = gameID;
