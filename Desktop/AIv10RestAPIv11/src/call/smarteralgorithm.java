@@ -28,39 +28,39 @@ public class smarteralgorithm {
 		if(currentlx - 1 < 0)
 		{
 			count++;
-			System.out.println("1"); // THIS
+		//	System.out.println("1"); // THIS
 		}else if(!(map[currentlx - 1][currently].getState() == AllPointsOnMap.State.EMPTY)) {
 			count++;
-			System.out.println("2");
+		//	System.out.println("2");
 		}
 			
 		if(currently + 1 >= weight)
 		{
 			count++;
-			System.out.println("3");
+		//	System.out.println("3");
 		}else if(!(map[currentlx][currently + 1].getState() == AllPointsOnMap.State.EMPTY)) {
 			count++;
-			System.out.println("4"); // THIS
+		//	System.out.println("4"); // THIS
 		}
 			
 		if(currentlx + 1 >= height)
 		{
 			count++;
-			System.out.println("5");
+		//	System.out.println("5");
 		}else if(!(map[currentlx + 1][currently].getState() == AllPointsOnMap.State.EMPTY))
 		{
 			count++;
-			System.out.println("6"); // THIS
+		//	System.out.println("6"); // THIS
 		}
 			
 		if(currently - 1 < 0)
 		{
 			count++;
-			System.out.println("7");
+		//	System.out.println("7");
 		}else if(!(map[currentlx][currently - 1].getState() == AllPointsOnMap.State.EMPTY))
 		{
 			count++;
-			System.out.println("8"); // THIS
+		//	System.out.println("8"); // THIS
 		}
 			
 		if(count == 4)
@@ -169,7 +169,6 @@ public class smarteralgorithm {
 				
 				if(currentlocationy + 1 >= weight) {
 					rightheight = 0;
-//					limitedright[1] = 0;
 					rightflag++;
 					rightbreak++;
 					break;

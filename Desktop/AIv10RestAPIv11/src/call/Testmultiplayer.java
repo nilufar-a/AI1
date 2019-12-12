@@ -21,11 +21,11 @@ public class Testmultiplayer {
 		AllPointsOnMap[][] map = new AllPointsOnMap[20][20];
 		
 
-			AIOpp ai = new AIOpp(1,1,"tw24",map);
+			AIOpp ai = new AIOpp("1",1,"tw24");
 			Thread thread = new Thread(ai);
 			thread.start();
 			
-			AIOpp ai1 = new AIOpp(2,1,"tw24",map);
+			AIOpp ai1 = new AIOpp("2",1,"tw24");
 			Thread thread1 = new Thread(ai1);
 			thread1.start();
 		

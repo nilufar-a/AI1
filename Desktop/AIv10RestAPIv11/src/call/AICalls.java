@@ -20,8 +20,15 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Application;
 
-import java.io.FileNotFoundException; 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -31,6 +38,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors; 
 
 import com.example.*;
+import com.google.gson.Gson;
 
 @Singleton
 @Path("/")
@@ -38,10 +46,10 @@ public class AICalls {
 
 	
 	private String userID;
-	private String gameID;
+	private Integer gameID;
 	private String token;
 	
-	private AllPointsOnMap[][] map;
+	private AllPointsOnMap[][] Map;
 	
 	private String getCurrentState;
 	
@@ -52,16 +60,17 @@ public class AICalls {
 	{ aiList = new ArrayList<AI>(); }
 	
 	
+	/*
 	public AICalls()
 	{
-		map = new AllPointsOnMap[20][20];
-		System.out.println(map.length + " | " + map[0].length);
+		/* Map = new AllPointsOnMap[20][20];
+		System.out.println(Map.length + " | " + Map[0].length);
 		// ---------------HERE I GET ERROR-------------------
-		for (int i = 0, j = 0; i < map.length;) {
+		for (int i = 0, j = 0; i < Map.length;) {
 			
 			
-				map[i][j] = new AllPointsOnMap();
-				map[i][j].setState(AllPointsOnMap.State.EMPTY); // GIVES NULL POINTER EXCEPTION
+			Map[i][j] = new AllPointsOnMap();
+			Map[i][j].setState(AllPointsOnMap.State.EMPTY); // GIVES NULL POINTER EXCEPTION
 			
 			
 //			System.out.println(map[i][j]);
@@ -70,9 +79,11 @@ public class AICalls {
 				i++;
 				j = 0;
 			}
-		}
+		}  
+	}*/
 		
-	}
+		
+	
 
 	
 	
@@ -84,7 +95,8 @@ public class AICalls {
 	{
 		try
 		{
-			AIOpp tmpAI = new AIOpp(ui.userID,ui.gameID,ui.token, map);
+			// AIOpp tmpAI = new AIOpp(ui.userID,ui.gameID,ui.token, Map);
+			AIOpp tmpAI = new AIOpp(ui.userID,ui.gameID,ui.token);
 			tmpAI.start();	
 		}catch(Exception e)
 		{
@@ -98,22 +110,10 @@ public class AICalls {
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	@Singleton
-	@Path("/ai-bot-get")
 	public String getResult()
 	{
-	    String info = "";
-		
-		for(int i = 0; i < aiList.size(); i++)
-		{
-				info += aiList.get(i).getInfo() + "\n\n";
-		}
-		
-		if(info == "")
-			info = "INFO IS EMPTY";
-		
-		index++;
-		return info;
+	   
+		return "AI_1 WORKS";
 	}
 	
 
